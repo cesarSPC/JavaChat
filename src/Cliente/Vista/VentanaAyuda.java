@@ -6,8 +6,8 @@
  * To change this template, choose Tools | Template Manager
  * and open the template in the editor.
  */
+package Cliente.Vista;
 
-package Cliente;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
@@ -20,31 +20,34 @@ import java.net.URL;
  *
  * @author Administrador
  */
-public class VentanaAyuda extends JFrame{
-    
-    /** Creates a new instance of VentanaAyuda */
-     JScrollPane panelPrincipal;
-    JEditorPane html;
+public class VentanaAyuda extends JFrame {
+
+    /**
+     * Creates a new instance of VentanaAyuda
+     */
+    private JScrollPane panelPrincipal;
+    private JEditorPane html;
+
     public VentanaAyuda() {
         super("Ventana de Ayuda :");
-        setSize(600,700);
-        setLocation(450,0);
-        panelPrincipal=new JScrollPane();
-        
-        try{ 
-            URL url=getClass().getResource("index.html");
-            html=new JEditorPane(url);
+        setSize(600, 700);
+        setLocation(450, 0);
+        panelPrincipal = new JScrollPane();
+
+        try {
+            URL url = getClass().getResource("index.html");
+            html = new JEditorPane(url);
             html.setEditable(false);
             setVisible(true);
-             
-        }catch(Exception e){
+
+        } catch (Exception e) {
             e.getMessage();
         }
-        
-        JViewport jv=panelPrincipal.getViewport();
+
+        JViewport jv = panelPrincipal.getViewport();
         jv.add(html);
-        
+
         setContentPane(panelPrincipal);
     }
-    
+
 }

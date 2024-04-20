@@ -7,8 +7,10 @@
  * and open the template in the editor.
  */
 
-package Cliente;
+package Cliente.Modelo;
 
+import Cliente.Vista.VentCliente;
+import Cliente.Controlador.threadCliente;
 import java.io.*;
 import java.net.*;
 import java.util.Vector;
