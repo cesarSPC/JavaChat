@@ -15,6 +15,6 @@ import javax.swing.JOptionPane;
  */
 public class Launcher {
     public static void main(String args[]) throws IOException {
-        new VentCliente();
+        new Control();
     }
 }
