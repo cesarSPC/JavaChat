@@ -17,6 +17,8 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.Socket;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.JOptionPane.*;
@@ -51,8 +53,9 @@ public class VentCliente extends JFrame implements ActionListener {
     /**
      * Creates a new instance of Cliente
      */
-    public VentCliente() throws IOException {
+    public VentCliente() {
         super("Cliente Chat");
+        Cliente.IP_SERVER = inputEmergente("Introducir IP_SERVER :","localhost");
         txtMensage = new JTextField(30);
         butEnviar = new JButton("Enviar");
         lblNomUser = new JLabel("Usuario <<  >>");
@@ -111,9 +114,12 @@ public class VentCliente extends JFrame implements ActionListener {
         add(barraMenu, BorderLayout.NORTH);
 
         txtMensage.requestFocus();//pedir el focus	
-
-        cliente = new Cliente(this);
-        cliente.conexion();
+        try {
+            cliente = new Cliente(this);
+            cliente.conexion();
+        } catch (IOException ex) {
+            mensajeConsola(ex.getMessage() + " <----");
+        }
         nomUsers = new Vector();
         ponerActivos(cliente.pedirUsuarios());
 
@@ -191,9 +197,22 @@ public class VentCliente extends JFrame implements ActionListener {
         ventPrivada.mostrarMsg(msg);
         ventPrivada.setVisible(true);
     }
-
-    public static void main(String args[]) throws IOException {
-        Cliente.IP_SERVER = JOptionPane.showInputDialog("Introducir IP_SERVER :", "localhost");
-        VentCliente p = new VentCliente();
+    
+    public void mensajeConsola(String msj){
+        System.out.println(msj);
     }
+    
+    public void mensajeEmergente(String msj){
+        JOptionPane.showConfirmDialog(null,msj);
+    }
+    
+    public String inputEmergente(String msj){
+        return JOptionPane.showInputDialog(null,msj);
+    }
+    
+    public String inputEmergente(String msj, String msj2){
+        return JOptionPane.showInputDialog(msj, msj2);
+    }
+
+    
 }
