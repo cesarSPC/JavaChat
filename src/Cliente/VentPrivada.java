@@ -49,7 +49,7 @@ public class VentPrivada extends JFrame implements ActionListener
       amigo="";
       
       this.addWindowListener(new WindowListener()
-      {         
+      {       
          public void windowClosing(WindowEvent e) {
             cerrarVentana();
          }
