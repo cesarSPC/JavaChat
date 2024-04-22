@@ -8,6 +8,7 @@
  */
 package Servidor.Controlador;
 
+import Cliente.Modelo.ArchivoPropiedades;
 import Servidor.Vista.Servidor;
 import java.awt.*;
 import java.io.*;
@@ -23,14 +24,18 @@ public class threadServidor extends Thread {
 
     private Socket scli = null;
     private Socket scli2 = null;
+    private int banStrikes = 3; //intentos faltantes para ban
     private DataInputStream entrada = null;
     private DataOutputStream salida = null;
     private DataOutputStream salida2 = null;
     public static Vector<threadServidor> clientesActivos = new Vector();
     private String nameUser;
     private Servidor serv;
+    ArchivoPropiedades properties = null;
 
-    public threadServidor(Socket scliente, Socket scliente2, Servidor serv) {
+
+    public threadServidor(Socket scliente, Socket scliente2, Servidor serv, ArchivoPropiedades properties) {
+        this.properties = properties;
         scli = scliente;
         scli2 = scliente2;
         this.serv = serv;
@@ -63,12 +68,12 @@ public class threadServidor extends Thread {
         int opcion = 0, numUsers = 0;
         String amigo = "", mencli = "";
 
-        while (true) {
+        while (this.banStrikes > 0) {
             try {
                 opcion = entrada.readInt();
                 switch (opcion) {
                     case 1://envio de mensage a todos
-                        mencli = entrada.readUTF();
+                        mencli = comprobarBaneo(entrada.readUTF());
                         serv.mostrar("mensaje recibido " + mencli);
                         enviaMsg(mencli);
                         break;
@@ -90,6 +95,18 @@ public class threadServidor extends Thread {
                 break;
             }
         }
+        
+        if(this.banStrikes <= 0){
+            serv.mostrar(this.nameUser + " ha sido baneado");
+            try{
+                this.salida2.writeInt(4);
+            }
+            catch(IOException ex){
+                
+            }
+            
+        }
+        
         serv.mostrar("Se removio un usuario");
         clientesActivos.removeElement(this);
         try {
@@ -145,4 +162,23 @@ public class threadServidor extends Thread {
             }
         }
     }
+    
+    
+    private String comprobarBaneo(String msg){
+        String rta = msg; 
+        for(String i : msg.toLowerCase().split(" ")){
+            if(properties.getData(i) != null){
+                this.banStrikes -= Integer.parseInt(properties.getData(i));
+                rta = "*********";
+                break;
+            }
+        }    
+       
+        
+        
+        return rta;
+        
+    }
+
+
 }

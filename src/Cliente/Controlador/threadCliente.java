@@ -40,6 +40,8 @@ public class threadCliente extends Thread {
                         vcli.mensageAmigo(amigo, menser);
                         vcli.mostrarMsg("ECO del servidor:" + menser);
                         break;
+                    case 4:
+                        System.exit(0);
                 }
             } catch (IOException e) {
                 vcli.mostrarMsg("Error en la comunicaci�n " + "Informaci�n para el usuario");
