@@ -4,13 +4,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/cesar/OneDrive/Documents/GitHub/JavaChat/src/Cliente/Vista/VentCliente.java</file>
-            <file>file:/C:/Users/cesar/OneDrive/Documents/GitHub/JavaChat/src/Servidor/Controlador/threadServidor.java</file>
-            <file>file:/C:/Users/cesar/OneDrive/Documents/GitHub/JavaChat/src/Cliente/Vista/VentPrivada.java</file>
-            <file>file:/C:/Users/cesar/OneDrive/Documents/GitHub/JavaChat/src/Servidor/Modelo/M.java</file>
-            <file>file:/C:/Users/cesar/OneDrive/Documents/GitHub/JavaChat/src/Cliente/Vista/VentanaAyuda.java</file>
-            <file>file:/C:/Users/cesar/OneDrive/Documents/GitHub/JavaChat/src/Servidor/Vista/Servidor.java</file>
-            <file>file:/C:/Users/cesar/OneDrive/Documents/GitHub/JavaChat/src/Cliente/Controlador/threadCliente.java</file>
+            <file>file:/C:/Users/Familia%20Mora/Desktop/JavaChat/src/Cliente/Vista/FileChooser.java</file>
+            <file>file:/C:/Users/Familia%20Mora/Desktop/JavaChat/src/Cliente/Modelo/Cliente.java</file>
+            <file>file:/C:/Users/Familia%20Mora/Desktop/JavaChat/src/Cliente/Vista/VentCliente.java</file>
+            <file>file:/C:/Users/Familia%20Mora/Desktop/JavaChat/src/Cliente/Modelo/ArchivoPropiedades.java</file>
+            <file>file:/C:/Users/Familia%20Mora/Desktop/JavaChat/data/Puertos_IP.properties</file>
+            <file>file:/C:/Users/Familia%20Mora/Desktop/JavaChat/src/Cliente/Controlador/threadCliente.java</file>
         </group>
     </open-files>
 </project-private>
