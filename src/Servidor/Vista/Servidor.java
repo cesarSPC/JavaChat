@@ -12,6 +12,8 @@ package Servidor.Vista;
  *
  * @author Administrador
  */
+import Cliente.Modelo.ArchivoPropiedades;
+import Cliente.Vista.FileChooser;
 import Servidor.Controlador.threadServidor;
 import java.awt.*;
 import java.io.*;
@@ -22,10 +24,12 @@ import javax.swing.*;
 public class Servidor extends JFrame {
 
     public JTextArea txaMostrar;
+    private ArchivoPropiedades listaNegra;
 
     public Servidor() {
         super("Consola servidor");
         txaMostrar = new JTextArea();
+        listaNegra = new ArchivoPropiedades(new FileChooser("Eliga lista negra").getFile());
 
         this.setContentPane(new JScrollPane(txaMostrar));
         setSize(350, 350);
@@ -37,36 +41,38 @@ public class Servidor extends JFrame {
     public void mostrar(String msg) {
         txaMostrar.append(msg + "\n");
     }
-
-    public void runServer() {
-        ServerSocket serv = null;//para comunicacion
-        ServerSocket serv2 = null;//para enviar mensajes
-        boolean listening = true;
-        try {
-            serv = new ServerSocket(8081);
-            serv2 = new ServerSocket(8082);
-            mostrar(".::Servidor activo :");
-            while (listening) {
-                Socket sock = null, sock2 = null;
-                try {
-                    mostrar("Esperando Usuarios");
-                    sock = serv.accept();
-                    sock2 = serv2.accept();
-                } catch (IOException e) {
-                    mostrar("Accept failed: " + serv + ", " + e.getMessage());
-                    continue;
-                }
-                threadServidor user = new threadServidor(sock, sock2, this);
-                user.start();
-            }
-
-        } catch (IOException e) {
-            mostrar("error :" + e);
-        }
-    }
-
-    public static void main(String abc[]) throws IOException {
-        Servidor ser = new Servidor();
-        ser.runServer();
-    }
+    
+    //Metodo normal, que conecta
+//    public void runServer() {
+//        ServerSocket serv = null;//para comunicacion
+//        ServerSocket serv2 = null;//para enviar mensajes
+//        boolean listening = true;
+//        try {
+//            serv = new ServerSocket(8081);
+//            serv2 = new ServerSocket(8082);
+//            mostrar(".::Servidor activo :");
+//            while (listening) {
+//                Socket sock = null, sock2 = null;
+//                try {
+//                    mostrar("Esperando Usuarios");
+//                    sock = serv.accept();
+//                    sock2 = serv2.accept();
+//                } catch (IOException e) {
+//                    mostrar("Accept failed: " + serv + ", " + e.getMessage());
+//                    continue;
+//                }
+//                threadServidor user = new threadServidor(sock, sock2, this, listaNegra);
+//                user.start();
+//            }
+//
+//        } catch (IOException e) {
+//            mostrar("error :" + e);
+//        }
+////    }
+        //Este metodo se ejecuta aparte como un launcher
+    
+//    public static void main(String abc[]) throws IOException {
+//        Servidor ser = new Servidor();
+//        ser.runServer();
+//    }
 }
