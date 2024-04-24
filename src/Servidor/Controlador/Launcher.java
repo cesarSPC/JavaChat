@@ -5,7 +5,7 @@
 package Servidor.Controlador;
 
 
-import Servidor.Vista.Servidor;
+import Servidor.Vista.VentanaPrincipal;
 import java.io.IOException;
 
 /**
@@ -13,8 +13,7 @@ import java.io.IOException;
  * @author Familia Mora
  */
 public class Launcher {
-    public static void main(String abc[]) throws IOException {
-        //Server ser = new Servidor();
-        //ser.runServer();
+    public static void main(String[] args){
+        new Control();
     }
 }

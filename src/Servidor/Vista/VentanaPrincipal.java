@@ -1,0 +1,48 @@
+/*
+ * Server.java
+ *
+ * Created on 21 de marzo de 2008, 12:02 PM
+ *
+ * To change this template, choose Tools | Template Manager
+ * and open the template in the editor.
+ */
+package Servidor.Vista;
+
+/**
+ *
+ * @author Administrador
+ */
+import Cliente.Modelo.ArchivoPropiedades;
+import Servidor.Controlador.ThreadServidor;
+import java.awt.*;
+import java.io.*;
+import java.net.*;
+import java.util.*;
+import javax.swing.*;
+
+public class VentanaPrincipal extends JFrame {
+
+    public JTextArea txaMostrar;
+
+    public VentanaPrincipal() {
+        super("Consola servidor");
+        txaMostrar = new JTextArea();
+
+        this.setContentPane(new JScrollPane(txaMostrar));
+        setSize(350, 350);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+
+    }
+
+    public void mostrar(String msg) {
+        txaMostrar.append(msg + "\n");
+    }
+    
+    public String recibirComandos(){
+        Scanner sc = new Scanner(System.in);
+        String command = sc.nextLine();
+        return command;
+    }
+    
+}
