@@ -25,11 +25,16 @@ public class threadServidor extends Thread {
     private Socket scli = null;
     private Socket scli2 = null;
     private int banStrikes = 3; //intentos faltantes para ban
-    //Modelo
-//    private DataInputStream entrada = null;
-//    private DataOutputStream salida = null;
-//    private DataOutputStream salida2 = null;
-//    public static Vector<threadServidor> clientesActivos = new Vector();
+    
+    //MODELO CONEXION
+    ////////////////////////////////////////////////////////////////////////////////
+    private DataInputStream entrada = null;
+    private DataOutputStream salida = null;
+    private DataOutputStream salida2 = null;
+    public static Vector<threadServidor> clientesActivos = new Vector();
+    ////////////////////////////////////////////////////////////////////////////////
+    
+    
     private String nameUser;
     private Servidor serv;
     ArchivoPropiedades properties = null;
@@ -70,34 +75,42 @@ public class threadServidor extends Thread {
         String amigo = "", mencli = "";
         
         
-        //Control
-//        while (this.banStrikes > 0) {
-//            try {
-//                opcion = entrada.readInt();
-//                switch (opcion) {
-//                    case 1://envio de mensage a todos
-//                        mencli = comprobarBaneo(entrada.readUTF());
-//                        serv.mostrar("mensaje recibido " + mencli);
-//                        enviaMsg(mencli);
-//                        break;
-//                    case 2://envio de lista de activos
-//                        numUsers = clientesActivos.size();
-//                        salida.writeInt(numUsers);
-//                        for (int i = 0; i < numUsers; i++) {
-//                            salida.writeUTF(clientesActivos.get(i).nameUser);
-//                        }
-//                        break;
-//                    case 3: // envia mensage a uno solo
-//                        amigo = entrada.readUTF();//captura nombre de amigo
-//                        mencli = entrada.readUTF();//mensage enviado
-//                        enviaMsg(amigo, mencli);
-//                        break;
-//                }
-//            } catch (IOException e) {
-//                System.out.println("El cliente termino la conexion");
-//                break;
-//            }
-//        }
+        
+        
+        //CONTROL
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        while (this.banStrikes > 0) {
+            try {
+                opcion = entrada.readInt();
+                switch (opcion) {
+                    case 1://envio de mensage a todos
+                        mencli = comprobarBaneo(entrada.readUTF());
+                        serv.mostrar("mensaje recibido " + mencli);
+                        enviaMsg(mencli);
+                        break;
+                    case 2://envio de lista de activos
+                        numUsers = clientesActivos.size();
+                        salida.writeInt(numUsers);
+                        for (int i = 0; i < numUsers; i++) {
+                            salida.writeUTF(clientesActivos.get(i).nameUser);
+                        }
+                        break;
+                    case 3: // envia mensage a uno solo
+                        amigo = entrada.readUTF();//captura nombre de amigo
+                        mencli = entrada.readUTF();//mensage enviado
+                        enviaMsg(amigo, mencli);
+                        break;
+                }
+            } catch (IOException e) {
+                System.out.println("El cliente termino la conexion");
+                break;
+            }
+        }
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        
+        
+        
         
         if(this.banStrikes <= 0){
             serv.mostrar(this.nameUser + " ha sido baneado");
