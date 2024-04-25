@@ -4,7 +4,8 @@
  */
 package Cliente.Vista;
 
-import Cliente.Modelo.Cliente;
+import Cliente.Controlador.Control;
+import Cliente.Modelo.ConnCliente;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,25 +17,22 @@ import javax.swing.*;
  *
  * @author Administrador
  */
-public class VentPrivada extends JFrame implements ActionListener {
+public class VentPrivada extends JFrame{
 
-    private JTextArea panMostrar;
-    private JTextField txtMensage;
-    private JButton butEnviar;
+    public JTextArea panMostrar;
+    public JTextField txtMensage;
+    public JButton butEnviar;
 
-    private Cliente cliente;
-    private String amigo;
+    private Control control;
 
-    public VentPrivada(Cliente cliente) {
+    public VentPrivada(Control control) {
         super("Amigo");
-        this.cliente = cliente;
+        this.control = control;
         txtMensage = new JTextField(30);
         butEnviar = new JButton("Enviar");
         panMostrar = new JTextArea();
         panMostrar.setEditable(false);
         txtMensage.requestFocus();
-        txtMensage.addActionListener(this);
-        butEnviar.addActionListener(this);
 
         JPanel panAbajo = new JPanel();
         panAbajo.setLayout(new BorderLayout());
@@ -46,8 +44,6 @@ public class VentPrivada extends JFrame implements ActionListener {
         setLayout(new BorderLayout());
         add(new JScrollPane(panMostrar), BorderLayout.CENTER);
         add(panAbajo, BorderLayout.SOUTH);
-
-        amigo = "";
 
         this.addWindowListener(new WindowListener() {
             public void windowClosing(WindowEvent e) {
@@ -79,7 +75,6 @@ public class VentPrivada extends JFrame implements ActionListener {
     }
 
     public void setAmigo(String ami) {
-        this.amigo = ami;
         this.setTitle(ami);
     }
 
@@ -91,11 +86,4 @@ public class VentPrivada extends JFrame implements ActionListener {
         this.panMostrar.append(msg + "\n");
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String mensaje = txtMensage.getText();
-        mostrarMsg(cliente.getNombre() + ">" + mensaje);
-        cliente.flujo(amigo, mensaje);
-        txtMensage.setText("");
-    }
 }

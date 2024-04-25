@@ -16,27 +16,18 @@ import java.net.Socket;
  *
  * @author cesar
  */
-public class Conexion {
+public class ConnSocket implements Cloneable{
 
     private Socket sock = null;
     private Socket sock2 = null;
     private DataInputStream entrada = null;
     private DataOutputStream salida = null;
     private DataOutputStream salida2 = null;
-    private ServerSocket serv = null; // Para comunicacion
-    private ServerSocket serv2 = null; // Para enviar mensajes
 
-    public Conexion() {
-    }
-
-    public void runServer(int puerto1, int puerto2) throws IOException {
-
-        serv = new ServerSocket(puerto1);
-        serv2 = new ServerSocket(puerto2);
-        
+    public ConnSocket() {
     }
     
-    public void aceptarClientes() throws IOException{
+    public void aceptarClientes(ServerSocket serv, ServerSocket serv2) throws IOException{
         sock = serv.accept();
         sock2 = serv2.accept();
         

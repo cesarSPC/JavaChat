@@ -9,7 +9,8 @@
 package Servidor.Controlador;
 
 import Servidor.Modelo.ArchivoPropiedades;
-import Servidor.Modelo.Conexion;
+import Servidor.Modelo.ConnServerSocket;
+import Servidor.Modelo.ConnSocket;
 import Servidor.Vista.VentanaPrincipal;
 import java.awt.*;
 import java.io.*;
@@ -26,9 +27,9 @@ public class ThreadServidor extends Thread {
     private int banStrikes = 3; //intentos faltantes para ban
     private String nameUser;
     private Control control;
-    private final Conexion conexCliente;
+    private final ConnSocket conexCliente;
 
-    public ThreadServidor(Control control, Conexion conexCliente) {
+    public ThreadServidor(Control control, ConnSocket conexCliente) {
         this.control = control;
         this.nameUser = "";
         
@@ -36,14 +37,6 @@ public class ThreadServidor extends Thread {
         this.conexCliente = conexCliente;
         
         this.control.getVista().mostrar("Cliente agregado: " + this);
-    }
-
-    public String getNameUser() {
-        return nameUser;
-    }
-
-    public void setNameUser(String name) {
-        nameUser = name;
     }
 
     public void run() {
@@ -60,36 +53,66 @@ public class ThreadServidor extends Thread {
         String amigo = "", mencli = "";
 
         //Control
-        control.manejoDeAcciones(this);
+        manejoDeAcciones();
         
+        control.getClientesActivos().remove(this);
+        enviaUserActivos();
         control.getVista().mostrar(this.nameUser + " ha sido baneado");
-        try {
-            conexCliente.getSalida2().writeInt(4);
-        } catch (IOException ex) {
-
-        }
 
         control.getVista().mostrar("Se removio un usuario");
-        control.getClientesActivos().remove(this);
+        
         try {
-            control.getVista().mostrar("Se desconecto un usuario");
             conexCliente.getSock().close();
             conexCliente.getSock2().close();
+            control.getVista().mostrar("Se desconecto un usuario");
         } catch (Exception et) {
             control.getVista().mostrar("no se puede cerrar el socket");
         }
     }
-
+    
+    public void manejoDeAcciones() {
+        while (banStrikes > 0) {
+            try {
+                int opcion = conexCliente.getEntrada().readInt();
+                String mensajeCliente, nombreAmigo;
+                int numUsers;
+                switch (opcion) {
+                    case 1:// Envio de mensaje a todos
+                        mensajeCliente = comprobarBaneo(conexCliente.getEntrada().readUTF());
+                        control.getVista().mostrar("mensaje recibido " + mensajeCliente);
+                        enviaMsg(mensajeCliente);
+                        break;
+                    case 2:// Envio de lista de activos
+                        numUsers = control.getClientesActivos().size();
+                        conexCliente.getSalida().writeInt(numUsers);
+                        for (int i = 0; i < numUsers; i++) {
+                            conexCliente.getSalida().writeUTF(control.getClientesActivos().get(i).getNameUser());
+                        }
+                        break;
+                    case 3: // Envia mensage a uno solo
+                        nombreAmigo = conexCliente.getEntrada().readUTF(); // Captura nombre de amigo
+                        mensajeCliente = conexCliente.getEntrada().readUTF(); // Mensage enviado
+                        enviaMsg(nombreAmigo, mensajeCliente);
+                        break;
+                }
+            } catch (IOException e) {
+                
+                control.getVista().mensajeConsola("El cliente termino la conexion");
+                break;
+            }
+        }
+    }
+    
     public void enviaMsg(String mencli2) {
         ThreadServidor user = null;
         for (int i = 0; i < control.getClientesActivos().size(); i++) {
             control.getVista().mostrar("MENSAJE DEVUELTO:" + mencli2);
             try {
                 user = control.getClientesActivos().get(i);
-                user.conexCliente.getSalida2().writeInt(1);//opcion de mensage 
+                user.conexCliente.getSalida2().writeInt(1); // Opcion de mensaje 
                 user.conexCliente.getSalida2().writeUTF("" + this.getNameUser() + " >" + mencli2);
             } catch (IOException e) {
-                e.printStackTrace();
+                control.getVista().mensajeConsola("Error ->" + e.getMessage());
             }
         }
     }
@@ -100,12 +123,12 @@ public class ThreadServidor extends Thread {
             try {
                 user = control.getClientesActivos().get(i);
                 if (user == this) {
-                    continue;//ya se lo envie
+                    continue; // ya se lo envie
                 }
                 user.conexCliente.getSalida2().writeInt(2);//opcion de agregar 
                 user.conexCliente.getSalida2().writeUTF(this.getNameUser());
             } catch (IOException e) {
-                e.printStackTrace();
+                control.getVista().mensajeConsola("Error ->" + e.getMessage());
             }
         }
     }
@@ -121,7 +144,7 @@ public class ThreadServidor extends Thread {
                     user.conexCliente.getSalida2().writeUTF("" + this.getNameUser() + ">" + mencli);
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                control.getVista().mensajeConsola("Error ->" + e.getMessage());
             }
         }
     }
@@ -144,9 +167,16 @@ public class ThreadServidor extends Thread {
         return banStrikes;
     }
 
-    public Conexion getConexCliente() {
+    public ConnSocket getConexCliente() {
         return conexCliente;
     }
     
+    public String getNameUser() {
+        return nameUser;
+    }
+
+    public void setNameUser(String name) {
+        nameUser = name;
+    }
     
 }

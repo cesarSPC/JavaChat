@@ -4,7 +4,7 @@
  */
 package Cliente.Controlador;
 
-import Cliente.Modelo.Cliente;
+import Cliente.Modelo.ConnCliente;
 import Cliente.Vista.VentCliente;
 import java.io.IOException;
 import javax.swing.JOptionPane;

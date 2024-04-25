@@ -29,14 +29,18 @@ public class VentanaPrincipal extends JFrame {
         txaMostrar = new JTextArea();
 
         this.setContentPane(new JScrollPane(txaMostrar));
+        setLocationRelativeTo(null);
         setSize(350, 350);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
 
     }
 
     public void mostrar(String msg) {
         txaMostrar.append(msg + "\n");
+    }
+    
+    public void mensajeConsola(String msj){
+        System.out.println(msj);
     }
     
     public String recibirComandos(){

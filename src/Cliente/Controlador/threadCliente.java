@@ -11,44 +11,50 @@ import java.util.logging.Logger;
 public class threadCliente extends Thread {
 
     private DataInputStream entrada;
-    private VentCliente vcli;
+    private Control control;
 
-    public threadCliente(DataInputStream entrada, VentCliente vcli) throws IOException {
+    public threadCliente(DataInputStream entrada, Control control){
         this.entrada = entrada;
-        this.vcli = vcli;
+        this.control = control;
     }
 
+    @Override
     public void run() {
-        String menser = "", amigo = "";
+
+        String mensajeServ = "", nombreAmigo = "";
         int opcion = 0;
         while (true) {
             try {
                 opcion = entrada.readInt();
                 switch (opcion) {
                     case 1://mensage enviado
-                        menser = entrada.readUTF();
-                        vcli.mostrarMsg("ECO del servidor:" + menser);
-                        vcli.mostrarMsg(menser);
+                        mensajeServ = entrada.readUTF();
+                        control.getVista().mostrarMsg(mensajeServ);
                         break;
-                    case 2://se agrega
-                        menser = entrada.readUTF();
-                        vcli.agregarUser(menser);
+                    case 2://se agrega o se sale un usuario
+                        mensajeServ = entrada.readUTF();
+                        control.agregarUser(mensajeServ);
                         break;
                     case 3://mensage de amigo
-                        amigo = entrada.readUTF();
-                        menser = entrada.readUTF();
-                        vcli.mensageAmigo(amigo, menser);
-                        vcli.mostrarMsg("ECO del servidor:" + menser);
+                        nombreAmigo = entrada.readUTF();
+                        mensajeServ = entrada.readUTF();
+                        control.mensageAmigo(nombreAmigo, mensajeServ);
+                        control.setAmigoActual(nombreAmigo);
+                        
                         break;
-                    case 4:
-                        System.exit(0);
                 }
             } catch (IOException e) {
-                vcli.mostrarMsg("Error en la comunicaci�n " + "Informaci�n para el usuario");
+                control.getVista().mensajeConsola("Se corto la comunicacion");
                 break;
             }
         }
-        vcli.mostrarMsg("se desconecto el servidor");
+        
+        System.exit(0);
+        
     }
 
+    public DataInputStream getEntrada() {
+        return entrada;
+    }
+    
 }

@@ -8,14 +8,19 @@
  */
 package Cliente.Vista;
 
-import Cliente.Modelo.Cliente;
+import Cliente.Modelo.ConnCliente;
+import Cliente.Controlador.Control;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,57 +32,55 @@ import javax.swing.JOptionPane.*;
  *
  * @author Administrador
  */
-public class VentCliente extends JFrame implements ActionListener {
+public class VentCliente extends JFrame{
 
     private String mensajeCliente;
-    private JTextArea panMostrar;
-    private JTextField txtMensage;
-    private JButton butEnviar;
-    private JLabel lblNomUser;
-    private JList lstActivos;
-    private JButton butPrivado;
-    private Cliente cliente;
+    public JTextArea panMostrar;
+    public JTextField txtMensage;
+    public JButton butEnviar;
+    public JLabel lblNomUser;
+    public JList lstActivos;
+    public JButton butPrivado;
+    public JButton butSalir;
 
-    private JMenuBar barraMenu;
-    private JMenu JMAyuda;
-    private JMenuItem help;
-    private JMenu JMAcerca;
-    private JMenuItem acercaD;
-    private VentanaAyuda va;
+    public JMenuBar barraMenu;
+    public JMenu JMAyuda;
+    public JMenuItem help;
+    public JMenu JMAcerca;
+    public JMenuItem acercaD;
+    public VentanaAyuda va;
 
-    JOptionPane AcercaDe;
+    private JOptionPane AcercaDe;
 
-    Vector<String> nomUsers;
-    VentPrivada ventPrivada;
+    private Control control;
+    
 
-    /**
-     * Creates a new instance of Cliente
-     */
-    public VentCliente() {
+    public VentCliente(Control control) {
         super("Cliente Chat");
-        Cliente.IP_SERVER = inputEmergente("Introducir IP_SERVER :","localhost");
+        
+        this.control = control;
         txtMensage = new JTextField(30);
         butEnviar = new JButton("Enviar");
+        butSalir = new JButton("Salir");
         lblNomUser = new JLabel("Usuario <<  >>");
         lblNomUser.setHorizontalAlignment(JLabel.CENTER);
         panMostrar = new JTextArea();
         panMostrar.setColumns(25);
-        txtMensage.addActionListener(this);
-        butEnviar.addActionListener(this);
+        
         lstActivos = new JList();
         butPrivado = new JButton("Privado");
-        butPrivado.addActionListener(this);
+        
 
         barraMenu = new JMenuBar();
         JMAyuda = new JMenu("Ayuda");
         help = new JMenuItem("Ayuda");
         help.setActionCommand("help");
-        help.addActionListener(this);
+        
 
         JMAcerca = new JMenu("Acerca de");
         acercaD = new JMenuItem("Creditos");
         acercaD.setActionCommand("Acerca");
-        acercaD.addActionListener(this);
+        
 
         JMAyuda.add(help);
         JMAcerca.add(acercaD);
@@ -93,8 +96,11 @@ public class VentCliente extends JFrame implements ActionListener {
         panAbajo.add(new JLabel("  Ingrese mensage a enviar:"), BorderLayout.NORTH);
         panAbajo.add(txtMensage, BorderLayout.CENTER);
         panAbajo.add(butEnviar, BorderLayout.EAST);
+        
         JPanel panRight = new JPanel();
         panRight.setLayout(new BorderLayout());
+        
+        
         panRight.add(lblNomUser, BorderLayout.NORTH);
         panRight.add(new JScrollPane(panMostrar), BorderLayout.CENTER);
         panRight.add(panAbajo, BorderLayout.SOUTH);
@@ -102,6 +108,8 @@ public class VentCliente extends JFrame implements ActionListener {
         panLeft.setLayout(new BorderLayout());
         panLeft.add(new JScrollPane(this.lstActivos), BorderLayout.CENTER);
         panLeft.add(this.butPrivado, BorderLayout.NORTH);
+        panLeft.add(butSalir, BorderLayout.SOUTH);
+        
         JSplitPane sldCentral = new JSplitPane();
         sldCentral.setDividerLocation(100);
         sldCentral.setDividerSize(7);
@@ -113,22 +121,11 @@ public class VentCliente extends JFrame implements ActionListener {
         add(sldCentral, BorderLayout.CENTER);
         add(barraMenu, BorderLayout.NORTH);
 
-        txtMensage.requestFocus();//pedir el focus	
-        try {
-            cliente = new Cliente(this);
-            cliente.conexion();
-        } catch (IOException ex) {
-            mensajeConsola(ex.getMessage() + " <----");
-        }
-        nomUsers = new Vector();
-        ponerActivos(cliente.pedirUsuarios());
-
-        ventPrivada = new VentPrivada(cliente);
+        txtMensage.requestFocus(); // Pedir el focus
 
         setSize(450, 430);
         setLocation(120, 90);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
+        setDefaultCloseOperation(0);
     }
 
     public void setNombreUser(String user) {
@@ -138,72 +135,13 @@ public class VentCliente extends JFrame implements ActionListener {
     public void mostrarMsg(String msg) {
         this.panMostrar.append(msg + "\n");
     }
-
-    public void ponerActivos(Vector datos) {
-        nomUsers = datos;
-        ponerDatosList(this.lstActivos, nomUsers);
-    }
-
-    public void agregarUser(String user) {
-        nomUsers.add(user);
-        ponerDatosList(this.lstActivos, nomUsers);
-    }
-
-    public void retirraUser(String user) {
-        nomUsers.remove(user);
-        ponerDatosList(this.lstActivos, nomUsers);
-    }
-
-    private void ponerDatosList(JList list, final Vector datos) {
-        list.setModel(new AbstractListModel() {
-            @Override
-            public int getSize() {
-                return datos.size();
-            }
-
-            @Override
-            public Object getElementAt(int i) {
-                return datos.get(i);
-            }
-        });
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-
-        String comand = (String) evt.getActionCommand();
-        if (comand.compareTo("help") == 0) {
-            va=new   VentanaAyuda();
-            va.setVisible(true);
-        }
-        if (comand.compareTo("Acerca") == 0) {
-            JOptionPane.showMessageDialog(this, "Jos� Valdez/Javier Vargas", "Desarrollado por", JOptionPane.INFORMATION_MESSAGE);
-        }
-        if (evt.getSource() == this.butEnviar || evt.getSource() == this.txtMensage) {
-            String mensaje = txtMensage.getText();
-            cliente.flujo(mensaje);
-            txtMensage.setText("");
-        } else if (evt.getSource() == this.butPrivado) {
-            int pos = this.lstActivos.getSelectedIndex();
-            if (pos >= 0) {
-                ventPrivada.setAmigo(nomUsers.get(pos));
-                ventPrivada.setVisible(true);
-            }
-        }
-    }
-
-    public void mensageAmigo(String amigo, String msg) {
-        ventPrivada.setAmigo(amigo);
-        ventPrivada.mostrarMsg(msg);
-        ventPrivada.setVisible(true);
-    }
     
     public void mensajeConsola(String msj){
         System.out.println(msj);
     }
     
     public void mensajeEmergente(String msj){
-        JOptionPane.showConfirmDialog(null,msj);
+        JOptionPane.showMessageDialog(null,msj);
     }
     
     public String inputEmergente(String msj){
