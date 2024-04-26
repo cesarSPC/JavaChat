@@ -27,18 +27,23 @@ public class ThreadComando extends Thread {
             control.getVista().mensajeConsola("Comando recibido: " + mensaje);
 
             String[] comando = mensaje.split(" ");
-
+            
+            boolean encontrado = false;
             if (!control.getClientesActivos().isEmpty() && comando[0].equals("ban") && comando.length < 3 && comando.length > 1) {
+                
                 for (ThreadServidor t : control.getClientesActivos()) {
                     
                     if (t.getNameUser().equals(comando[1])) {
                         t.getConexCliente().cerrar();
                         control.getVista().mensajeConsola(t.getNameUser() + " baneado");
-                        break;
+                        
+                        encontrado = true;
                     }
                     
                 }
-                control.getVista().mensajeConsola("No se encontró el usuario");
+                
+                if(! encontrado)
+                    control.getVista().mensajeConsola("No se encontró el usuario");
             }
         }
     }

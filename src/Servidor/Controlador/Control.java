@@ -24,10 +24,10 @@ import java.util.ArrayList;
 public class Control {
 
     private VentanaPrincipal vista;
-    public ConnServerSocket servidor;
-    public ArchivoPropiedades puertos;
-    public ArchivoPropiedades listaNegra;
-    public ArrayList<ThreadServidor> clientesActivos;
+    private ConnServerSocket servidor;
+    private ArchivoPropiedades puertos;
+    private ArchivoPropiedades listaNegra;
+    private ArrayList<ThreadServidor> clientesActivos;
     private ThreadComando manejoComando;
 
     /**
@@ -36,7 +36,10 @@ public class Control {
     public Control() {
         vista = new VentanaPrincipal();
         servidor = new ConnServerSocket();
+        vista.mensajeEmergente("A continuación elija properties de puertos y lista negra de palabras"
+                             + "\na restringir con sus valores. Por defecto en la carpeta \"data\".");
         puertos = new ArchivoPropiedades(new FileChooser("Seleccione puertos").getFile());
+        
         listaNegra = new ArchivoPropiedades(new FileChooser("Seleccione lista negra de palabras").getFile());
         vista.setVisible(true);
         clientesActivos = new ArrayList<ThreadServidor>();

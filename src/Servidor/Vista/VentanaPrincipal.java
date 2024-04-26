@@ -43,6 +43,10 @@ public class VentanaPrincipal extends JFrame {
         System.out.println(msj);
     }
     
+    public void mensajeEmergente(String msj){
+        JOptionPane.showMessageDialog(null, msj);
+    }
+    
     public String recibirMensaje(){
         Scanner sc = new Scanner(System.in);
         String command = sc.nextLine();

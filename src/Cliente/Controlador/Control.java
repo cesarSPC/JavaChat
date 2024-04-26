@@ -29,43 +29,43 @@ import javax.swing.JOptionPane;
  */
 public class Control implements ActionListener {
 
-    /*
-    *Comunicacion con la clase VentCliente de la vista
+    /**
+    * Comunicacion con la clase VentCliente de la vista
      */
     private VentCliente vista;
-    /*
-    *Comunicacion con la clase VentanaAyuda de la vista
+    /**
+    * Comunicacion con la clase VentanaAyuda de la vista
      */
     private VentanaAyuda va;
-    /*
-    *Comunicacion con la clase ConnCliente del modelo
+    /**
+    * Comunicacion con la clase ConnCliente del modelo
      */
     private ConnCliente cliente;
-    /*
-    *Comunicacion con la clase ArchivoPropiedades que permitira llamar los datos de ip y puerto
-    *de manera que no rompemos el principio abierto cerrado
+    /**
+    * Comunicacion con la clase ArchivoPropiedades que permitira llamar los datos de ip y puerto
+    * de manera que no rompemos el principio abierto cerrado
      */
     private ArchivoPropiedades puertos;
-    /*
-    *Comunicacion con la clase VentPrivada de la vista
+    /**
+    * Comunicacion con la clase VentPrivada de la vista
      */
     private VentPrivada ventPrivada;
-    /*
-    *Guarda el amigoActual como String (Es la comunicacion privada que se esta ejecutando)
+    /**
+    * Guarda el amigoActual como String (Es la comunicacion privada que se esta ejecutando)
      */
     private String amigoActual;
-    /*
-    *Atributo diseñado para guardar en un arraylist todos los usuarios
+    /**
+    * Atributo diseñado para guardar en un arraylist todos los usuarios
      */
     private ArrayList<String> nomUsers;
-    /*
-    *objeto hilo cliente guardado con el alias de t
+    /**
+    * Objeto hilo cliente guardado con el alias de t
      */
     private threadCliente t;
 
-    /*
-    *Controlador que se encarga de instanciar las clases principales del sistema, para su funcionamiento
-    *iniializa la vista e hilos correspondientes para la ejecucion del programa
+    /**
+    * Controlador que se encarga de instanciar las clases principales del sistema, para su funcionamiento
+    * inicializa la vista e hilos correspondientes para la ejecucion del programa
      */
     public Control() {
         amigoActual = "";
@@ -95,9 +95,9 @@ public class Control implements ActionListener {
         ventPrivada.butEnviar.addActionListener(this);
     }
 
-    /*
-    *Inicializa el cliente establciendo los puertos de comunicacion (enviar y comunicar)
-    *obtiene los puertos del archivo properties
+    /**
+    * Inicializa el cliente establciendo los puertos de comunicacion (enviar y comunicar)
+    * obtiene los puertos del archivo properties
      */
     private void iniciarCliente() {
         try {
@@ -118,8 +118,8 @@ public class Control implements ActionListener {
 
     }
     
-    /*
-    *Maneja los eventos de la vista
+    /**
+    * Maneja los eventos de la vista
     *@param evt evento
     */
     @Override
@@ -161,8 +161,8 @@ public class Control implements ActionListener {
         }
     }
 
-    /*
-    *actualiza una lista de nombres de usuarios
+    /**
+    * Actualiza una lista de nombres de usuarios
     */
     public void ponerDatosList() {
         ArrayList<String> datos = nomUsers;
@@ -192,8 +192,8 @@ public class Control implements ActionListener {
         });
     }
 
-    /*
-    *Recibe un mensaje del cliente y lo envia al servidor
+    /**
+    * Recibe un mensaje del cliente y lo envia al servidor
     *@param mens recibe un mensaje Sring
     */
     public void mensajeEnviado(String mens) {
@@ -207,8 +207,8 @@ public class Control implements ActionListener {
         }
     }
     
-    /*
-    *Permite enviar un mensaje privado a un amigo
+    /**
+    * Permite enviar un mensaje privado a un amigo
     *@param amigo Es el usuario especifico al que se le envia el mensaje
     *@param mens es el mensaje a enviar
     */
@@ -224,8 +224,8 @@ public class Control implements ActionListener {
         }
     }
 
-    /*
-    *Agrega los nuevos usuarios a una lista
+    /**
+    * Agrega los nuevos usuarios a una lista
     *@param recibe el usuario
     */
     public void agregarUser(String user) {
@@ -233,8 +233,8 @@ public class Control implements ActionListener {
         ponerDatosList();
     }
 
-    /*
-    *Retira al usuario de la lista de usuarios
+    /**
+    * Retira al usuario de la lista de usuarios
     *@param recibe el usuario
     */
     public void retirarUser(String user) {
@@ -242,34 +242,34 @@ public class Control implements ActionListener {
         ponerDatosList();
     }
 
-    /*
-    *Muestra la ventana privada y los mensajes correspondientes
-    *@param amigo Es el usuario especifico al que se le envia el mensaje
-    *@param mens es el mensaje a mostar
-    */    
-    public void mensageAmigo(String amigo, String msg) {
-        ventPrivada.setAmigo(amigo);
-        ventPrivada.mostrarMsg(msg);
-        ventPrivada.setVisible(true);
-    }
     
-    /*
-    *Obtiene la vista del cliente
+    
+    /**
+    * Obtiene la vista del cliente
     *@return retorna la vista
     */
     public VentCliente getVista() {
         return vista;
     }
-    /*
-    *Obtienen la coneccion con el cliente
+    /**
+    *Obtienen la conexión con el cliente
     *@return retorna el cliente
     */
     public ConnCliente getCliente() {
         return cliente;
     }
+
+    /**
+    *Obtienen la ventana privada
+    *@return retorna ventana privada
+    */
+    public VentPrivada getVentPrivada() {
+        return ventPrivada;
+    }
     
-    /*
-    *Obtiene el amigo actual con el que se esta comunicando
+    /**
+    * Cambia el amigo actual con el que se esta comunicando
+     * @param amigoActual Es el valor a asignar a amigoActual
     */
     public void setAmigoActual(String amigoActual) {
         this.amigoActual = amigoActual;

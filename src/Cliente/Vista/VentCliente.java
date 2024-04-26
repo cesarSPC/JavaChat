@@ -8,25 +8,10 @@
  */
 package Cliente.Vista;
 
-import Cliente.Modelo.ConnCliente;
 import Cliente.Controlador.Control;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.*;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.JOptionPane.*;
 
 /**
  *la clase Vent cliente se encargara de manejar los aspectos GUI del cliente
@@ -72,9 +57,6 @@ public class VentCliente extends JFrame{
     public JMenuItem help;
     public JMenu JMAcerca;
     public JMenuItem acercaD;
-    public VentanaAyuda va;
-
-    private JOptionPane AcercaDe;
 
     private Control control;
     

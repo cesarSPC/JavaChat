@@ -56,7 +56,7 @@ public class threadCliente extends Thread {
                     case 3://mensage de amigo
                         nombreAmigo = entrada.readUTF();
                         mensajeServ = entrada.readUTF();
-                        control.mensageAmigo(nombreAmigo, mensajeServ);
+                        control.getVentPrivada().mensageAmigo(nombreAmigo, mensajeServ);
                         control.setAmigoActual(nombreAmigo);
                         
                         break;

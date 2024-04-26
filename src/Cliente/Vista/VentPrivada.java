@@ -118,5 +118,16 @@ public class VentPrivada extends JFrame {
     public void mostrarMsg(String msg) {
         this.panMostrar.append(msg + "\n");
     }
+    
+    /**
+    * Muestra la ventana privada y los mensajes correspondientes
+    *@param amigo Es el usuario especifico al que se le envia el mensaje
+    *@param msg es el mensaje a mostar
+    */    
+    public void mensageAmigo(String amigo, String msg) {
+        setAmigo(amigo);
+        mostrarMsg(msg);
+        setVisible(true);
+    }
 
 }
