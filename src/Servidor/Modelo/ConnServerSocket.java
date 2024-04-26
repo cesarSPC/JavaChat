@@ -24,6 +24,12 @@ public class ConnServerSocket{
     public ConnServerSocket() {
     }
 
+    /**
+     * Esta funcion solo crea el servidor y los puertos 
+     * @param puerto1 recibe los puertos en los que va a escuchar 
+     * @param puerto2 recibe puertos de salida 
+     * @throws IOException 
+     */    
     public void runServer(int puerto1, int puerto2) throws IOException {
 
         serv = new ServerSocket(puerto1);

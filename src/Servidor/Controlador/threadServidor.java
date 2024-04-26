@@ -29,6 +29,10 @@ public class ThreadServidor extends Thread {
     private Control control;
     private final ConnSocket conexCliente;
 
+    /**
+     * @param control injeccion de dependencia con el controlador
+     * @param conexCliente Conexion especifica con cada cliente conectado
+     */
     public ThreadServidor(Control control, ConnSocket conexCliente) {
         this.control = control;
         this.nameUser = "";
@@ -39,6 +43,14 @@ public class ThreadServidor extends Thread {
         this.control.getVista().mostrar("Cliente agregado: " + this);
     }
 
+    
+    /**
+     * Metodo concurrente de mi clase. 
+     * Este metodo se encarga de iniciar la conexion del cliente con el servidor.
+     * Luego llama a una funcion que manejara el envio de datos del usuario al servidor
+     * Cuando termina la ciclo de while es porque el usuario ha sido baniado.
+     * Entonces maneja la logica nescesaria
+   */
     public void run() {
         control.getVista().mostrar(".::Esperando Mensajes :");
         
@@ -70,6 +82,13 @@ public class ThreadServidor extends Thread {
         }
     }
     
+    
+    /**
+     * Este metodo se encarga del manejo de instrucciones enviadas entre el servidor y el cliente
+     * Primero y dentreo del while, lee varias veces la entrada de números desde el cliente 
+     * Evalua el caso y ejecuta la instruccion dependiendo lo que haya pedido el cliente
+     * Cuando se pierde la conexion de cualquier forma el catch salta y mustra que la conexion con el cliente termino
+     */
     public void manejoDeAcciones() {
         while (banStrikes > 0) {
             try {
@@ -103,6 +122,12 @@ public class ThreadServidor extends Thread {
         }
     }
     
+    
+    /**
+     * Este metodo se encarga de enviar un mensaje por el chat grupal a todos los usuarios activos
+     * @param mencli2 es el string para un mensaje de chat grupal
+     */
+    
     public void enviaMsg(String mencli2) {
         ThreadServidor user = null;
         for (int i = 0; i < control.getClientesActivos().size(); i++) {
@@ -110,20 +135,28 @@ public class ThreadServidor extends Thread {
             try {
                 user = control.getClientesActivos().get(i);
                 user.conexCliente.getSalida2().writeInt(1); // Opcion de mensaje 
-                user.conexCliente.getSalida2().writeUTF("" + this.getNameUser() + " >" + mencli2);
+                
+                //escribe la salida del sockect con el cliente para enviar mensaje
+                user.conexCliente.getSalida2().writeUTF("" + this.getNameUser() + " >" + mencli2); 
+                
             } catch (IOException e) {
                 control.getVista().mensajeConsola("Error ->" + e.getMessage());
             }
         }
     }
 
+    
+    
+    /**
+     * Este metodo envia la lista de usuarios activos al cliente para que actualice su vista y parametros
+     */
     public void enviaUserActivos() {
         ThreadServidor user = null;
         for (int i = 0; i < control.getClientesActivos().size(); i++) {
             try {
                 user = control.getClientesActivos().get(i);
                 if (user == this) {
-                    continue; // ya se lo envie
+                    continue; // esta parte permite que el cliente no se encuentre a su mismo en la lista de usuarios
                 }
                 user.conexCliente.getSalida2().writeInt(2);//opcion de agregar 
                 user.conexCliente.getSalida2().writeUTF(this.getNameUser());
@@ -133,6 +166,14 @@ public class ThreadServidor extends Thread {
         }
     }
 
+   
+    
+    /**
+     * Este metodo lo que hace es buscar al usuario especifico por nombre para mandar un mensaje
+     * Una vez lo encuentra le manda el mensaje por su sockect y le escribe el remitente - this.getNameUser -
+     * @param amigo nombre del usuario a quien mandar mensaje
+     * @param mencli string con el mensaje para usuario
+     */
     public void enviaMsg(String amigo, String mencli) {
         ThreadServidor user = null;
         for (int i = 0; i < control.getClientesActivos().size(); i++) {
@@ -149,6 +190,15 @@ public class ThreadServidor extends Thread {
         }
     }
 
+    
+    /**
+     * Esta funcion es la implementacion de baneo con la lista negra.
+     * Recorre el mensaje palabra por palabra y si una palabra equivale a una de la lista negra, 
+     * aplica la penitencia de puntos de ban.
+     * En caso de detectar una palabra que esta en la lista negra, la funcion retorna un string diferente al mensaje original
+     * @param msg mensaje a evaluar para determinar baneo
+     * @return devuelve censurado el mensjae en caso de que una palabra este en la lista negra
+     */
     public String comprobarBaneo(String msg) {
         String rta = msg;
         for (String i : msg.toLowerCase().split(" ")) {

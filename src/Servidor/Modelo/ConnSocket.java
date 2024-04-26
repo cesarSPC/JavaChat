@@ -27,6 +27,14 @@ public class ConnSocket implements Cloneable{
     public ConnSocket() {
     }
     
+    
+    /**
+     * Esta funcion crea la conexion unica entre el servidor y el cliente.
+     * Acepta al cliente y seguidamente crea sus stream tanto de entrada como de salida
+     * @param serv recibe sockect servidor entrada 
+     * @param serv2 recibe sockecte servido salida
+     * @throws IOException 
+     */
     public void aceptarClientes(ServerSocket serv, ServerSocket serv2) throws IOException{
         sock = serv.accept();
         sock2 = serv2.accept();

@@ -29,6 +29,9 @@ public class Control {
     public ArchivoPropiedades listaNegra;
     public ArrayList<ThreadServidor> clientesActivos;
 
+    /**
+     * Metodo contructor del controler 
+    */
     public Control() {
         vista = new VentanaPrincipal();
         servidor = new ConnServerSocket();
@@ -40,6 +43,11 @@ public class Control {
         loopServidor();
     }
 
+    
+    /**
+     * Metodo loop servidor, crea el servidor y queda en un bucle esperando nuevos usarios.
+     * Cuando llega un usuario habre un nuevo hilo con su sockect propio para su comunicación
+     */
     private void loopServidor() {
         try {
 
