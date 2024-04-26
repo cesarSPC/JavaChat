@@ -1,31 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/Familia%20Mora/Desktop/JavaChat/src/Cliente/Vista/FileChooser.java</file>
-            <file>file:/C:/Users/Familia%20Mora/Desktop/JavaChat/src/Cliente/Modelo/Cliente.java</file>
+            <file>file:/C:/Users/Familia%20Mora/Desktop/JavaChat/src/Cliente/Vista/VentanaAyuda.java</file>
+            <file>file:/C:/Users/Familia%20Mora/Desktop/JavaChat/src/Cliente/Vista/VentPrivada.java</file>
+            <file>file:/C:/Users/Familia%20Mora/Desktop/JavaChat/src/Servidor/Controlador/ThreadServidor.java</file>
             <file>file:/C:/Users/Familia%20Mora/Desktop/JavaChat/src/Cliente/Vista/VentCliente.java</file>
-            <file>file:/C:/Users/Familia%20Mora/Desktop/JavaChat/src/Cliente/Modelo/ArchivoPropiedades.java</file>
-            <file>file:/C:/Users/Familia%20Mora/Desktop/JavaChat/data/Puertos_IP.properties</file>
-            <file>file:/C:/Users/Familia%20Mora/Desktop/JavaChat/src/Cliente/Controlador/threadCliente.java</file>
-=======
-            <file>file:/C:/Users/Juan/Desktop/Coding%20Projects/PA/JavaChat/src/Servidor/Vista/Servidor.java</file>
-            <file>file:/C:/Users/Juan/Desktop/Coding%20Projects/PA/JavaChat/src/Servidor/Controlador/threadServidor.java</file>
-            <file>file:/C:/Users/Juan/Desktop/Coding%20Projects/PA/JavaChat/src/Cliente/Vista/VentanaAyuda.java</file>
-            <file>file:/C:/Users/Juan/Desktop/Coding%20Projects/PA/JavaChat/src/Cliente/Controlador/threadCliente.java</file>
-            <file>file:/C:/Users/Juan/Desktop/Coding%20Projects/PA/JavaChat/src/Cliente/Controlador/Control.java</file>
-            <file>file:/C:/Users/Juan/Desktop/Coding%20Projects/PA/JavaChat/data/listaNegra.properties</file>
-            <file>file:/C:/Users/Juan/Desktop/Coding%20Projects/PA/JavaChat/src/Cliente/Vista/VentCliente.java</file>
-            <file>file:/C:/Users/Juan/Desktop/Coding%20Projects/PA/JavaChat/src/Cliente/Controlador/Launcher.java</file>
-            <file>file:/C:/Users/Juan/Desktop/Coding%20Projects/PA/JavaChat/src/Cliente/Modelo/ArchivoPropiedades.java</file>
-            <file>file:/C:/Users/Juan/Desktop/Coding%20Projects/PA/JavaChat/src/Servidor/Modelo/M.java</file>
-            <file>file:/C:/Users/Juan/Desktop/Coding%20Projects/PA/JavaChat/src/Cliente/Vista/FileChooser.java</file>
-            <file>file:/C:/Users/Juan/Desktop/Coding%20Projects/PA/JavaChat/data/Puertos_IP.properties</file>
-            <file>file:/C:/Users/Juan/Desktop/Coding%20Projects/PA/JavaChat/src/Cliente/Modelo/Cliente.java</file>
->>>>>>> 8512a5da86240f67d7d77f4db6063673adb9455b
         </group>
     </open-files>
 </project-private>

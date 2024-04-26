@@ -8,16 +8,34 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/*
+*Clase que maneja los hilos del cliente
+*/
 public class threadCliente extends Thread {
-
+    
+    /*
+    *permite leer entradas de texto
+    */
     private DataInputStream entrada;
+    /*
+    *Se comunica con el control
+    */
     private Control control;
 
+    
+    /*
+    *Controlador que inicializa como primera instancia la entrada y el control
+    *@param entrada la entrada de texto que recibe
+    *@param control el control de la clase que recibe
+    */
     public threadCliente(DataInputStream entrada, Control control){
         this.entrada = entrada;
         this.control = control;
     }
-
+    
+    /*
+    *Metodo para ejecutar el hilo con los procesos estipulados
+    */
     @Override
     public void run() {
 
@@ -52,7 +70,9 @@ public class threadCliente extends Thread {
         System.exit(0);
         
     }
-
+    /*
+    *recibe la entrada de texto
+    */
     public DataInputStream getEntrada() {
         return entrada;
     }

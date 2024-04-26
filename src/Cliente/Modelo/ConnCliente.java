@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
+ * Clase ConnCliente que maneja toda la conexion del cliente con el servidor
  *
  * @author Administrador
  */
@@ -42,6 +43,12 @@ public class ConnCliente {
         this.control = control;
     }
 
+    /*
+    *Crea las conexiones con los puertos 1 y 2, asi como tambien instancia las entradas
+    *y salidas de los mensajes
+    *@param puerto1 recibe un puerto conexion
+    *@param puerto2 recibe un puerto conexion
+     */
     public void conexion(int puerto1, int puerto2) throws IOException {
         comunication = new Socket(ConnCliente.IP_SERVER, puerto1);
         comunication2 = new Socket(ConnCliente.IP_SERVER, puerto2);
@@ -52,7 +59,10 @@ public class ConnCliente {
         control.getVista().setNombreUser(nomCliente);
         salida.writeUTF(nomCliente);
     }
-
+    
+    /*
+    *Cierra las comunicaciones para evitar vulnerabilidades en el sistema
+    */
     public void cerrar() {
         try {
             comunication.close();
@@ -61,19 +71,29 @@ public class ConnCliente {
             Logger.getLogger(ConnCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    /*
+    *Recibe el nombre del cliente
+    */
     public String getNombre() {
         return nomCliente;
     }
-
+    
+    /*
+    *recibe la en etrada
+    */
     public DataInputStream getEntrada() {
         return entrada;
     }
-
+    /*
+    *recibe la salida
+    */
     public DataOutputStream getSalida() {
         return salida;
     }
-
+    /*
+    *recibe la entrada2
+    */
     public DataInputStream getEntrada2() {
         return entrada2;
     }

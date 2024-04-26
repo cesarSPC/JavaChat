@@ -14,17 +14,37 @@ import java.awt.event.WindowListener;
 import javax.swing.*;
 
 /**
+ * la clase VentPrivada se encargara de manejar los aspectos GUI del cliente
+ * pero en un contexto de chat privado
  *
  * @author Administrador
  */
-public class VentPrivada extends JFrame{
+public class VentPrivada extends JFrame {
 
+    /**
+     * Área de texto para mostrar mensajes privados.
+     */
     public JTextArea panMostrar;
+    /**
+     * Campo de texto para ingresar mensajes privados.
+     */
     public JTextField txtMensage;
+    /**
+     * Botón para enviar mensajes privados.
+     */
     public JButton butEnviar;
-
+    /**
+     * Instancia de la clase Control que maneja la lógica del cliente.
+     */
     private Control control;
 
+    /**
+     * Constructor de la clase VentPrivada. Inicializa los componentes de la
+     * interfaz gráfica y configura el diseño.
+     *
+     * @param control Instancia de la clase Control que maneja la lógica del
+     * cliente.
+     */
     public VentPrivada(Control control) {
         super("Amigo");
         this.control = control;
@@ -74,14 +94,27 @@ public class VentPrivada extends JFrame{
         setLocation(570, 90);
     }
 
+    /**
+     * Establece el título de la ventana con el nombre del amigo.
+     *
+     * @param ami Nombre del amigo.
+     */
     public void setAmigo(String ami) {
         this.setTitle(ami);
     }
 
+    /**
+     * Cierra la ventana y la oculta.
+     */
     private void cerrarVentana() {
         this.setVisible(false);
     }
 
+    /**
+     * Muestra un mensaje en el área de texto panMostrar.
+     *
+     * @param msg Mensaje a mostrar.
+     */
     public void mostrarMsg(String msg) {
         this.panMostrar.append(msg + "\n");
     }
