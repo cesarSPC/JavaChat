@@ -39,6 +39,7 @@ public class ThreadServidor extends Thread {
         this.control.getVista().mostrar("Cliente agregado: " + this);
     }
 
+    @Override
     public void run() {
         control.getVista().mostrar(".::Esperando Mensajes :");
         
@@ -58,12 +59,9 @@ public class ThreadServidor extends Thread {
         control.getClientesActivos().remove(this);
         enviaUserActivos();
         control.getVista().mostrar(this.nameUser + " ha sido baneado");
-
-        control.getVista().mostrar("Se removio un usuario");
         
         try {
-            conexCliente.getSock().close();
-            conexCliente.getSock2().close();
+            conexCliente.cerrar();
             control.getVista().mostrar("Se desconecto un usuario");
         } catch (Exception et) {
             control.getVista().mostrar("no se puede cerrar el socket");
@@ -177,6 +175,10 @@ public class ThreadServidor extends Thread {
 
     public void setNameUser(String name) {
         nameUser = name;
+    }
+
+    public void setBanStrikes(int banStrikes) {
+        this.banStrikes = banStrikes;
     }
     
 }

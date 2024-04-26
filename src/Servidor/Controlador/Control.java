@@ -28,6 +28,7 @@ public class Control {
     public ArchivoPropiedades puertos;
     public ArchivoPropiedades listaNegra;
     public ArrayList<ThreadServidor> clientesActivos;
+    private ThreadComando manejoComando;
 
     public Control() {
         vista = new VentanaPrincipal();
@@ -38,9 +39,13 @@ public class Control {
         clientesActivos = new ArrayList<ThreadServidor>();
 
         loopServidor();
+        
+        
     }
 
     private void loopServidor() {
+        manejoComando = new ThreadComando(this);
+        manejoComando.start();
         try {
 
             int puerto1 = Integer.parseInt(puertos.getData("Puerto.1"));
