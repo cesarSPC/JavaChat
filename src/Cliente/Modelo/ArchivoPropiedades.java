@@ -72,7 +72,13 @@ public class ArchivoPropiedades {
             }
         }
     }
-
+    
+    /**
+     * Obtiene el valor de una propiedad específica del archivo de propiedades.
+     *
+     * @param key Clave de la propiedad a obtener.
+     * @return Valor de la propiedad, o null si la clave no existe.
+     */
     public String getData(String key) {
         return this.propiedades.getProperty(key);
     }

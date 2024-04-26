@@ -14,6 +14,9 @@ import javax.swing.JOptionPane;
  * @author cesar
  */
 public class Launcher {
+    /*
+    *Ejecuta el metodo main el cual instancia el controlador para dar el incio al programa
+    */
     public static void main(String args[]) throws IOException {
         new Control();
     }

@@ -29,18 +29,42 @@ import javax.swing.border.Border;
 import javax.swing.JOptionPane.*;
 
 /**
- *
+ *la clase Vent cliente se encargara de manejar los aspectos GUI del cliente
  * @author Administrador
  */
 public class VentCliente extends JFrame{
-
+    
+    /**
+     * Almacena el mensaje ingresado por el cliente.
+     */
     private String mensajeCliente;
+    /**
+     * Área de texto para mostrar mensajes.
+     */
     public JTextArea panMostrar;
+    /**
+     * Campo de texto para ingresar mensajes.
+     */
     public JTextField txtMensage;
+    /**
+     * Botón para enviar mensajes.
+     */
     public JButton butEnviar;
+    /**
+     * Etiqueta para mostrar el nombre de usuario.
+     */
     public JLabel lblNomUser;
+    /**
+     * Lista de usuarios activos.
+     */
     public JList lstActivos;
+    /**
+     * Botón para iniciar una conversación privada.
+     */
     public JButton butPrivado;
+    /**
+     * Botón para salir de la aplicación.
+     */
     public JButton butSalir;
 
     public JMenuBar barraMenu;
@@ -54,7 +78,12 @@ public class VentCliente extends JFrame{
 
     private Control control;
     
-
+    /**
+     * Constructor de la clase VentCliente.
+     * Inicializa los componentes de la interfaz gráfica y configura el diseño.
+     *
+     * @param control Instancia de la clase Control que maneja la lógica del cliente.
+     */
     public VentCliente(Control control) {
         super("Cliente Chat");
         
@@ -128,26 +157,54 @@ public class VentCliente extends JFrame{
         setDefaultCloseOperation(0);
     }
 
+    /**
+     * Establece el nombre de usuario en el JLabel lblNomUser.
+     *
+     * @param user Nombre de usuario a mostrar.
+     */
     public void setNombreUser(String user) {
         lblNomUser.setText("Usuario " + user);
     }
-
+    /**
+     * Muestra un mensaje en el área de texto panMostrar.
+     *
+     * @param msg Mensaje a mostrar.
+     */
     public void mostrarMsg(String msg) {
         this.panMostrar.append(msg + "\n");
     }
-    
+    /**
+     * Muestra un mensaje en la consola.
+     *
+     * @param msj Mensaje a mostrar en la consola.
+     */
     public void mensajeConsola(String msj){
         System.out.println(msj);
     }
-    
+    /**
+     * Muestra un mensaje emergente utilizando JOptionPane.
+     *
+     * @param msj Mensaje a mostrar en el cuadro de diálogo.
+     */
     public void mensajeEmergente(String msj){
         JOptionPane.showMessageDialog(null,msj);
     }
-    
+    /**
+     * Muestra un cuadro de diálogo de entrada utilizando JOptionPane.
+     *
+     * @param msj Mensaje a mostrar en el cuadro de diálogo.
+     * @return La cadena ingresada por el usuario, o null si se canceló la operación.
+     */
     public String inputEmergente(String msj){
         return JOptionPane.showInputDialog(null,msj);
     }
-    
+    /**
+     * Muestra un cuadro de diálogo de entrada con un valor por defecto utilizando JOptionPane.
+     *
+     * @param msj  Mensaje a mostrar en el cuadro de diálogo.
+     * @param msj2 Valor por defecto para el campo de entrada.
+     * @return La cadena ingresada por el usuario, o null si se canceló la operación.
+     */
     public String inputEmergente(String msj, String msj2){
         return JOptionPane.showInputDialog(msj, msj2);
     }
