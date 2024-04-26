@@ -22,19 +22,51 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author cesar
+ * @author cesar Clase Control, se encarga de manejar la comunicacion entre el
+ * modelo y la vista del cliente y realizar procesos que permitean su correcta
+ * operacion
+ *
  */
 public class Control implements ActionListener {
 
+    /*
+    *Comunicacion con la clase VentCliente de la vista
+     */
     private VentCliente vista;
+    /*
+    *Comunicacion con la clase VentanaAyuda de la vista
+     */
     private VentanaAyuda va;
+    /*
+    *Comunicacion con la clase ConnCliente del modelo
+     */
     private ConnCliente cliente;
+    /*
+    *Comunicacion con la clase ArchivoPropiedades que permitira llamar los datos de ip y puerto
+    *de manera que no rompemos el principio abierto cerrado
+     */
     private ArchivoPropiedades puertos;
+    /*
+    *Comunicacion con la clase VentPrivada de la vista
+     */
     private VentPrivada ventPrivada;
+    /*
+    *Guarda el amigoActual como String (Es la comunicacion privada que se esta ejecutando)
+     */
     private String amigoActual;
+    /*
+    *Atributo diseñado para guardar en un arraylist todos los usuarios
+     */
     private ArrayList<String> nomUsers;
+    /*
+    *objeto hilo cliente guardado con el alias de t
+     */
     private threadCliente t;
 
+    /*
+    *Controlador que se encarga de instanciar las clases principales del sistema, para su funcionamiento
+    *iniializa la vista e hilos correspondientes para la ejecucion del programa
+     */
     public Control() {
         amigoActual = "";
         nomUsers = new ArrayList<String>();
@@ -63,6 +95,10 @@ public class Control implements ActionListener {
         ventPrivada.butEnviar.addActionListener(this);
     }
 
+    /*
+    *Inicializa el cliente establciendo los puertos de comunicacion (enviar y comunicar)
+    *obtiene los puertos del archivo properties
+     */
     private void iniciarCliente() {
         try {
             int puerto1 = Integer.parseInt(puertos.getData("Puerto.1"));
@@ -81,7 +117,11 @@ public class Control implements ActionListener {
         }
 
     }
-
+    
+    /*
+    *Maneja los eventos de la vista
+    *@param evt evento
+    */
     @Override
     public void actionPerformed(ActionEvent evt) {
 
@@ -116,11 +156,14 @@ public class Control implements ActionListener {
             ventPrivada.mostrarMsg(getCliente().getNombre() + ">" + mensaje);
             mensajeEnviado(amigoActual, mensaje);
             ventPrivada.txtMensage.setText("");
-        } else if (evt.getSource() == vista.butSalir){
+        } else if (evt.getSource() == vista.butSalir) {
             cliente.cerrar();
         }
     }
 
+    /*
+    *actualiza una lista de nombres de usuarios
+    */
     public void ponerDatosList() {
         ArrayList<String> datos = nomUsers;
         try {
@@ -148,7 +191,11 @@ public class Control implements ActionListener {
             }
         });
     }
-    
+
+    /*
+    *Recibe un mensaje del cliente y lo envia al servidor
+    *@param mens recibe un mensaje Sring
+    */
     public void mensajeEnviado(String mens) {
         try {
             vista.mensajeConsola("el mensaje enviado desde el cliente es :"
@@ -159,7 +206,12 @@ public class Control implements ActionListener {
             vista.mensajeConsola("error...." + e);
         }
     }
-
+    
+    /*
+    *Permite enviar un mensaje privado a un amigo
+    *@param amigo Es el usuario especifico al que se le envia el mensaje
+    *@param mens es el mensaje a enviar
+    */
     public void mensajeEnviado(String amigo, String mens) {
         try {
             vista.mensajeConsola("el mensaje enviado desde el cliente es :"
@@ -172,30 +224,53 @@ public class Control implements ActionListener {
         }
     }
 
+    /*
+    *Agrega los nuevos usuarios a una lista
+    *@param recibe el usuario
+    */
     public void agregarUser(String user) {
         nomUsers.add(user);
         ponerDatosList();
     }
 
+    /*
+    *Retira al usuario de la lista de usuarios
+    *@param recibe el usuario
+    */
     public void retirarUser(String user) {
         nomUsers.remove(user);
         ponerDatosList();
     }
 
+    /*
+    *Muestra la ventana privada y los mensajes correspondientes
+    *@param amigo Es el usuario especifico al que se le envia el mensaje
+    *@param mens es el mensaje a mostar
+    */    
     public void mensageAmigo(String amigo, String msg) {
         ventPrivada.setAmigo(amigo);
         ventPrivada.mostrarMsg(msg);
         ventPrivada.setVisible(true);
     }
-
+    
+    /*
+    *Obtiene la vista del cliente
+    *@return retorna la vista
+    */
     public VentCliente getVista() {
         return vista;
     }
-
+    /*
+    *Obtienen la coneccion con el cliente
+    *@return retorna el cliente
+    */
     public ConnCliente getCliente() {
         return cliente;
     }
-
+    
+    /*
+    *Obtiene el amigo actual con el que se esta comunicando
+    */
     public void setAmigoActual(String amigoActual) {
         this.amigoActual = amigoActual;
     }
