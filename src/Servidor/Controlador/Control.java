@@ -28,6 +28,7 @@ public class Control {
     public ArchivoPropiedades puertos;
     public ArchivoPropiedades listaNegra;
     public ArrayList<ThreadServidor> clientesActivos;
+    private ThreadComando manejoComando;
 
     /**
      * Metodo contructor del controler 
@@ -41,6 +42,8 @@ public class Control {
         clientesActivos = new ArrayList<ThreadServidor>();
 
         loopServidor();
+        
+        
     }
 
     
@@ -49,6 +52,8 @@ public class Control {
      * Cuando llega un usuario habre un nuevo hilo con su sockect propio para su comunicación
      */
     private void loopServidor() {
+        manejoComando = new ThreadComando(this);
+        manejoComando.start();
         try {
 
             int puerto1 = Integer.parseInt(puertos.getData("Puerto.1"));
