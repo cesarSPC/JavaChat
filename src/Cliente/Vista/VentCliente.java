@@ -14,7 +14,7 @@ import java.awt.Color;
 import javax.swing.*;
 
 /**
- *la clase Vent cliente se encargara de manejar los aspectos GUI del cliente
+ * Se encargara de manejar los aspectos GUI del cliente
  * @author Administrador
  */
 public class VentCliente extends JFrame{
@@ -69,6 +69,7 @@ public class VentCliente extends JFrame{
     public VentCliente(Control control) {
         super("Cliente Chat");
         
+        // Declara componentes
         this.control = control;
         txtMensage = new JTextField(30);
         butEnviar = new JButton("Enviar");

@@ -13,17 +13,17 @@ import java.util.logging.Logger;
 */
 public class threadCliente extends Thread {
     
-    /*
+    /**
     *permite leer entradas de texto
     */
     private DataInputStream entrada;
-    /*
+    /**
     *Se comunica con el control
     */
     private Control control;
 
     
-    /*
+    /**
     *Controlador que inicializa como primera instancia la entrada y el control
     *@param entrada la entrada de texto que recibe
     *@param control el control de la clase que recibe
@@ -33,7 +33,7 @@ public class threadCliente extends Thread {
         this.control = control;
     }
     
-    /*
+    /**
     *Metodo para ejecutar el hilo con los procesos estipulados
     */
     @Override
@@ -45,15 +45,15 @@ public class threadCliente extends Thread {
             try {
                 opcion = entrada.readInt();
                 switch (opcion) {
-                    case 1://mensage enviado
+                    case 1: // Mensaje enviado
                         mensajeServ = entrada.readUTF();
                         control.getVista().mostrarMsg(mensajeServ);
                         break;
-                    case 2://se agrega o se sale un usuario
+                    case 2: // Se agrega o se sale un usuario
                         mensajeServ = entrada.readUTF();
                         control.agregarUser(mensajeServ);
                         break;
-                    case 3://mensage de amigo
+                    case 3: // Mensaje de amigo
                         nombreAmigo = entrada.readUTF();
                         mensajeServ = entrada.readUTF();
                         control.getVentPrivada().mensageAmigo(nombreAmigo, mensajeServ);
@@ -62,6 +62,7 @@ public class threadCliente extends Thread {
                         break;
                 }
             } catch (IOException e) {
+                // Se captura cuando la conexion se cae o se cierra con cerrar()
                 control.getVista().mensajeConsola("Se corto la comunicacion");
                 break;
             }
@@ -70,8 +71,9 @@ public class threadCliente extends Thread {
         System.exit(0);
         
     }
-    /*
-    *recibe la entrada de texto
+    /**
+    * Recibe la entrada de datos
+     * @return Entrada de datos
     */
     public DataInputStream getEntrada() {
         return entrada;

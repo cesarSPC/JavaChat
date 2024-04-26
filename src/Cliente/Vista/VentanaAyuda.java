@@ -28,12 +28,14 @@ public class VentanaAyuda extends JFrame {
     private JScrollPane panelPrincipal;
     private JEditorPane html;
     
-    /*
-    *Constructor de la clase VentAyuda. Inicializa los componentes de la
+    /**
+    * Constructor de la clase VentAyuda. Inicializa los componentes de la
     * interfaz gráfica y configura el diseño.
     */
     public VentanaAyuda() {
         super("Ventana de Ayuda :");
+        
+        // Declara componentes
         setSize(600, 700);
         setLocation(450, 0);
         panelPrincipal = new JScrollPane();

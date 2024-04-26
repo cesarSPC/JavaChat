@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author cesar
  */
-public class ConnSocket implements Cloneable{
+public class ConnSocket{
 
     private Socket sock = null;
     private Socket sock2 = null;
@@ -46,6 +46,10 @@ public class ConnSocket implements Cloneable{
         salida2 = new DataOutputStream(sock2.getOutputStream());
     }
     
+    /**
+     * Este método cierra las conexiones de los sockets, dentro de un
+     * try-catch para capturar errores
+     */
     public void cerrar(){
         try {
             sock.close();

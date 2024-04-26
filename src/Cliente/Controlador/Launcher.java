@@ -4,20 +4,16 @@
  */
 package Cliente.Controlador;
 
-import Cliente.Modelo.ConnCliente;
-import Cliente.Vista.VentCliente;
-import java.io.IOException;
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author cesar
  */
 public class Launcher {
-    /*
-    *Ejecuta el metodo main el cual instancia el controlador para dar el incio al programa
+    /**
+    * Ejecuta el metodo main el cual instancia el controlador para dar el incio al programa
+     * @param args
     */
-    public static void main(String args[]) throws IOException {
+    public static void main(String args[]){
         new Control();
     }
 }

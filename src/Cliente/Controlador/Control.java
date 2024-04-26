@@ -72,7 +72,8 @@ public class Control implements ActionListener {
         nomUsers = new ArrayList<String>();
 
         vista = new VentCliente(this);
-
+        
+        // Pide los datos requeridos de servudir
         ConnCliente.IP_SERVER = vista.inputEmergente("Introducir IP_SERVER :", "localhost");
         puertos = new ArchivoPropiedades(new FileChooser("Seleccione puertos para el cliente").getFile());
         iniciarCliente();
@@ -80,6 +81,7 @@ public class Control implements ActionListener {
         t = new threadCliente(cliente.getEntrada2(), this);
         t.start();
 
+        // Inicializa vista principal
         vista.setVisible(true);
 
         vista.txtMensage.addActionListener(this);
@@ -89,8 +91,10 @@ public class Control implements ActionListener {
         vista.acercaD.addActionListener(this);
         vista.butSalir.addActionListener(this);
 
+        // Pone los usuarios activos
         ponerDatosList();
-
+        
+        // Inicializa vista privada
         ventPrivada = new VentPrivada(this);
         ventPrivada.butEnviar.addActionListener(this);
     }
@@ -226,7 +230,7 @@ public class Control implements ActionListener {
 
     /**
     * Agrega los nuevos usuarios a una lista
-    *@param recibe el usuario
+    *@param user recibe el usuario
     */
     public void agregarUser(String user) {
         nomUsers.add(user);
@@ -235,7 +239,7 @@ public class Control implements ActionListener {
 
     /**
     * Retira al usuario de la lista de usuarios
-    *@param recibe el usuario
+    *@param user recibe el usuario
     */
     public void retirarUser(String user) {
         nomUsers.remove(user);
@@ -252,7 +256,7 @@ public class Control implements ActionListener {
         return vista;
     }
     /**
-    *Obtienen la conexión con el cliente
+    * Obtiene la conexión con el cliente
     *@return retorna el cliente
     */
     public ConnCliente getCliente() {
@@ -260,7 +264,7 @@ public class Control implements ActionListener {
     }
 
     /**
-    *Obtienen la ventana privada
+    * Obtiene la ventana privada
     *@return retorna ventana privada
     */
     public VentPrivada getVentPrivada() {

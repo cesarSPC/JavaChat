@@ -43,9 +43,9 @@ public class ConnCliente {
         this.control = control;
     }
 
-    /*
-    *Crea las conexiones con los puertos 1 y 2, asi como tambien instancia las entradas
-    *y salidas de los mensajes
+    /**
+    * Crea las conexiones con los puertos 1 y 2, asi como tambien instancia las entradas
+    * y salidas de los mensajes
     *@param puerto1 recibe un puerto conexion
     *@param puerto2 recibe un puerto conexion
      */
@@ -60,8 +60,8 @@ public class ConnCliente {
         salida.writeUTF(nomCliente);
     }
     
-    /*
-    *Cierra las comunicaciones para evitar vulnerabilidades en el sistema
+    /**
+    * Cierra las comunicaciones para evitar vulnerabilidades en el sistema
     */
     public void cerrar() {
         try {
@@ -72,26 +72,29 @@ public class ConnCliente {
         }
     }
     
-    /*
-    *Recibe el nombre del cliente
+    /**
+    * Retorna el nombre del cliente
+    * @return nombre del cliente
     */
     public String getNombre() {
         return nomCliente;
     }
     
-    /*
-    *recibe la en etrada
+    /**
+    * Retorna la entrada de la conexion
+     * @return entrada de conexion
     */
     public DataInputStream getEntrada() {
         return entrada;
     }
-    /*
-    *recibe la salida
+    /**
+    * Retorna la salida de la conexion
+     * @return salida conexion
     */
     public DataOutputStream getSalida() {
         return salida;
     }
-    /*
+    /**
     *recibe la entrada2
     */
     public DataInputStream getEntrada2() {
